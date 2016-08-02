@@ -1,0 +1,154 @@
+# [MODULENAME].psm1
+
+<# 
+.SYNOPSIS
+  [MODULENAME].psm1 = Loader module to import and load all sub private\public .ps1's when import-module is run for this module
+.NOTES
+Written By: Todd Kadrie
+Website:	http://tinstoys.blogspot.com
+Twitter:	http://twitter.com/tostka
+Change Log
+[VERSIONS]
+Based on [LINK]
+.DESCRIPTION
+
+.PARAMETER  <Parameter-Name>
+.INPUTS
+None. Does not accepted piped input.
+.OUTPUTS
+None. Returns no objects or output.
+.EXAMPLE
+.LINK
+*---^ END Comment-based Help  ^--- #>
+
+#*======v TYPICAL INCLUDE PUBLIC/PRIVATE PSM1 v======
+#Get public and private function definition files.
+$Public = @( Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue ) ;
+$Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue ) ;
+#Dot source the files
+Foreach($import in @($Public + $Private)) {
+    Try {
+      . $import.fullname ; 
+    } catch {
+      Write-Error -Message "Failed to import function $($import.fullname): $_" ;
+    } ;
+}  # loop-E; ; 
+
+# Here I might...
+# Read in or create an initial config file and variable
+# Export Public functions ($Public.BaseName) for WIP modules
+# Set variables visible to the module and its functions only
+Export-ModuleMember -Function $Public.Basename ;
+#*======^ TYPICAL INCLUDE PUBLIC/PRI^ATE PSM1 ^======
+
+#*======v TYPICAL MONOLITHIC SINGLE-FILE PSM1 v======
+
+#*======v STANDARD CONSTANTS/STOCK VARIABLES v======
+# SERVERS
+$ServersHCNA="LYNMS650;LYNMS651;BCCMS650;BCCMS651" ; $ServersHCNA=$ServersHCNA.split(";") ;
+$ServersHCAU="ADLMS640;ADLMS641" ; $ServersHCAU=$ServersHCAU.split(";") ; 
+$ServersHCEU="SPBMS640;SPBMS641" ; $ServersHCEU=$ServersHCEU.split(";") ; 
+
+# STANDARD PATHS
+$ArchPath="\\lynms650\D$\scripts\rpts\" ; 
+
+# STRING CONSTANTS
+$sQot = [char]34 ; $sQotS = [char]39 ; 
+
+$xxx="====VERB====";
+$xxx=$xxx.replace("VERB",$ScriptBaseName) ; 
+$BARS=("="*10);
+$MyBox="LYN-3V6KSY1","TIN-BYTEIII" ; 
+$DomainWork = "TORO";
+$DomHome = "REDBANK";
+$DomLab="TORO-LAB";
+
+# REGEX FILTERS
+$rgxDateValidMDY="^([0]?[1-9]|[1][0-2])[./-]([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0-9]{4}|[0-9]{2})$" ; 
+$rgxTCasServers="^(LYN|BCC)MS65[0-1]$" ; 
+$rgxIncidentNumTOR="\d{6}"
+$rgxSamAcctNameTOR = "^\w{2,20}$" ; 
+
+$NoProf=[bool]([Environment]::GetCommandLineArgs() -like '-noprofile'); # if($NoProf){# do this};
+
+$ProgInterval= 500 ; # write-progress wait interval in ms
+
+#*======^ END STANDARD CONSTANTS/STOCK VARIABLES ^======
+
+#*======v FUNCTIONS v======
+
+#*======^ END FUNCTIONS ^======
+
+<# Functions within this module:
+    Get-TimeStamp
+    Get-AdminInitials
+    # v Add-EMSRemote set : 
+      Get-ExchangeServerInSite
+      Add-EMSRemote
+      get-GCFast
+    # ^ Add-EMSRemote set : 
+    get-SiteContactOU
+    get-SiteMbxOU
+    Validate-Password
+    Test-TranscriptionSupported
+    Test-Transcribing
+    Stop-TranscriptLog
+    Archive-Log
+    Start-IseTranscript
+    Start-TranscriptLog
+    Send-EmailNotif
+    EMSLoadLatest
+    ADMTLoad
+    Test-32Bit
+#>
+
+<# EXPORTS:
+    By default, Import-Module imports everything in the module, visible to the user. To onlyl make 'some' functions/varis visible, execute an Export-ModuleMember per experoted object at the end of your script module:
+    # export one function:
+    Export-ModuleMember -Function 'Add-EMSRemote' ; 
+    # export all get- functions
+    Export-ModuleMember -Function 'get-*' ; 
+    # export $Neighborhood variable defined in the module 
+    Export-ModuleMember -Variable 'Neighborhood' ; 
+#>
+
+<# 10:04 AM 5/31/2016 Build a list of Functions: pull out the Function lines:
+# list the lines unmodified (rgx matches spaces or tabs):
+(get-content "C:\sc\powershell\ExAdminLib\ExAdminLib.psm1").split("`n") -match "^((\s)*)Function((\s)*).*((\s)*){.*$" ; 
+# strip the lines to just the function names, with Sort into alpha order
+"C:\sc\powershell\ExAdminLib\ExAdminLib.psm1").split("`n") -match "^((\s)*)Function((\s)*).*((\s)*){.*$"| sort ).replace("function ","").replace("Function ","").replace("{","").trim() ; 
+outputs: 
+Add-EMSRemote
+ADMTLoad
+#>
+# make it join into a semi-delim str for the below
+( (get-content "C:\sc\powershell\ExAdminLib\ExAdminLib.psm1" ).split("`n") -match "^((\s)*)Function((\s)*).*((\s)*){.*$" | sort).replace("function","").replace("Function","").replace("{","").trim() -join ";" | out-clipboard ;
+
+$modFunct="Add-EMSRemote;ADMTLoad;Archive-Log;EMSLoadLatest;Get-AdminInitials;Get-ExchangeServerInSite;get-GCFast;get-SiteContactOU;get-SiteMbxOU;Get-TimeStamp;Send-EmailNotif;Start-IseTranscript;start-TranscriptLog;Stop-TranscriptLog;Test-32Bit;Test-Transcribing;Test-TranscriptionSupported;Validate-Password".split(";") ;
+foreach($MF in $modFunct){
+    Export-ModuleMember -Function "$MF" ;
+} ; 
+
+<# go after variable defs from a constants.ps1 file
+# 2-stage -match, 1st pulls the lines from array that $xxx=, 2nd rgx groups just the $xxx= portion:
+(get-content "C:\sc\powershell\ExAdmin\Public\Constants.ps1").split("`n") -match "^((\s)*)(\$\w*)((\s)*)\=" | sort |%{ $_ -match "^((\s)*)(\$\w*)" | out-null ; $matches[0] }
+# outputs:
+$ArchPath
+...
+#
+# run a join on the above, (includes .replace to strip the vari itself out):
+(((get-content "C:\sc\powershell\ExAdmin\Public\Constants.ps1").split("`n") -match "^((\s)*)(\$\w*)((\s)*)\=" | sort |%{$_ -match "^((\s)*)(\$\w*)"|out-null ; $matches[0]}) -join ";").tostring().replace("`$modVaris;","") | out-clipboard ;
+# output: $ArchPath;$BARS;$DomainWork;$DomHome;$DomLab;$MyBox;$NoProf;$ProgInterval;$rgxDateValidMDY;$rgxIncidentNumTOR;$rgxSamAcctNameTOR;$rgxTCasServers;$ServersHCAU;$ServersHCEU;$ServersHCNA;$sQot;$xxx;$xxx
+#
+# run a join on the above, (includes .replace to strip the vari itself out & the $ dollar signs as well (for the Export-ModuleMember command)
+(((get-content "C:\sc\powershell\ExAdmin\Public\Constants.ps1").split("`n") -match "^((\s)*)(\$\w*)((\s)*)\=" | sort |%{$_ -match "^((\s)*)(\$\w*)"|out-null ; $matches[0]}) -join ";").tostring().replace("`$modVaris;","").replace("`$","") | out-clipboard ;
+#ArchPath;BARS;DomainWork;DomHome;DomLab;MyBox;NoProf;ProgInterval;rgxDateValidMDY;rgxIncidentNumTOR;rgxSamAcctNameTOR;rgxTCasServers;ServersHCAU;ServersHCEU;ServersHCNA;sQot;xxx;xxx
+#
+#>
+
+$modVaris="ArchPath;BARS;DomainWork;DomHome;DomLab;MyBox;NoProf;ProgInterval;rgxDateValidMDY;rgxIncidentNumTOR;rgxSamAcctNameTOR;rgxTCasServers;ServersHCAU;ServersHCEU;ServersHCNA;sQot;xxx".split(";") ;
+foreach($MV in $modVaris){
+    Export-ModuleMember -Variable "$MV" ;
+} ; 
+
+#*======^ TYPICAL MONOLITHIC SINGLE-FILE PSM1 ^======
