@@ -1,0 +1,48 @@
+TOPIC                              Line 1, column 1   # Used by Get-Help About*
+    about_<TopicName>              Line 2, column 5   # and other post-processing tools
+                                   Line 3 (blank)     
+SHORT DESCRIPTION                  Line 4, column 1
+    <description>                  Line 5, column 5
+                                   
+                                   # File encoding: UTF-8
+                                   # Line length:   80 chars
+LONG DESCRIPTION
+    
+  <OPTIONAL SUBTOPICS>
+
+EXAMPLES
+
+NOTE
+
+TROUBLESHOOTING NOTE
+   <Bugs that you are likely to fix. Warns users that the current behavior 
+    is likely to change.>
+
+FREQUENTLY ASKED QUESTIONS:
+   <Q & A > 
+   
+DEPENDENCIES
+   - Requires PowerShell 2 or later
+   
+REFERENCES
+    - Doug Finke's ImportExcel (inspired this, we borrowed ideas and code):
+        github.com/dfinke/ImportExcel
+
+    - PSExcel on GitHub:
+        github.com/RamblingCookieMonster/PSExcel
+
+    - PSExcel Intro Blog Post:
+        ramblingcookiemonster.github.io/PSExcel-Intro
+
+    -Automated testing results:
+        ci.appveyor.com/project/RamblingCookieMonster/psexcel/history        
+        
+SEE ALSO
+    <Topic> wiki on GitHub:  https://github.com/MyTopic    # Link to your Github wiki
+    List related PowerShell help topics.
+    You can also list related articles, blogs, and videos with their URLs.
+
+KEYWORDS
+    List alternate names or titles for this topic or its content that readers
+    might use if they don't know the topic name. Get-Help finds the keywords
+    during its full-text search.
