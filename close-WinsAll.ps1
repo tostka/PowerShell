@@ -15,7 +15,7 @@ close-WinsAll.ps1 - Gracefully close (prompted saves) on all desktop windows, Co
 .INPUTS
 None. Does not accepted piped input.
 .OUTPUTS
-None. Returns no objects or output.
+Echos to console
 .EXAMPLE
 . close-WinsAll.ps1
 .LINK
@@ -33,4 +33,5 @@ write-host -foregroundcolor green "***v ISSUING CLOSE ON _ALL_ DESKTOP WINDOWS! 
 
 "close Explr wins..." ; (New-Object -comObject Shell.Application).Windows() |?{$_.Name -eq 'Windows Explorer'} | % {"explr:$($_.LocationName)" ; $_.quit()} ;
 write-host -foregroundcolor green "***^ ISSUED CLOSE ON _ALL_ DESKTOP WINDOWS! ^***" ;
+
 
