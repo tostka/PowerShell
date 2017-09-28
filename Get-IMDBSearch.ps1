@@ -1,5 +1,4 @@
-#Get-IMDBSearch.ps1
-
+#Get-IMDBSearch.ps1 - Imdb title lookup function, uses text/html parsing. Posted by kristofdba
 <#
 .SYNOPSIS
 Get-IMDBSearch.ps1 - Interactive Imdb title lookup function, uses xml (html) parsing. Returns and lists closest matches in menu, then returns details of selected choice
@@ -11,9 +10,18 @@ Inspired by code By: Unknown (posted by kristofdba) & jerdub1993's xml element p
 Website:	https://kristofdba.wordpress.com/2013/03/05/imdb-powershell-function/
             https://www.reddit.com/r/PowerShell/comments/61kib6/query_imdb_for_movies_and_information/
 Change Log
-# 9:58 PM 6/6/2017 sub-out pipe for comma. added code to support both hm & m duration (and cases where both aren't present), also added conversion of hm duration to mins
-* 9:57 PM 6/4/2017 added out-null to array check. added support for year-only release dates (oldest items don't have full dates). updated where -> ? syntax throughout. made SummaryLine dynamic, 3-line & 4-line to accommodate items wo mpaa ratings, added if/then tests on a variety of components (many fields drop completely from the page). added $sQueryMinInterval and dawdle to ensure google qrys are at least that far apart (30s). untype $Title, to let it acommoodate objects & arrays. cleaning up, making ratingvalue test (optional field), replacing -like with rgx -match
-* 11:17 PM 6/3/2017 fixed the Released date (regex out actual date, dropped the regional designator), shifted to outputing a raw data obje in func, and handle formatting post-return. removed 'field name: strings from data. Played with outputs a bit, added -Full param, to dump full CObj, otherwise dumps a summary. works fairly well, completely retooled, largely from scratch, leveraging xml elements parsing. port and cleanup, add pshelp, real param block, otb syntax
+# 9:20 PM 9/12/2017 shifted a bunch of items to 2-stage: they were passing and handing back blank values, when matches failed. 
+# 9:58 PM 6/6/2017 added code to support both hm & m duration (and cases where both aren't present), also added conversion of hm duration to mins
+* 9:57 PM 6/4/2017 added out-null to array check, added support for year-only release dates (oldest items don't have full dates),
+made SummaryLine dynamic, 3-line & 4-line to accommodate items wo mpaa ratings, added if/then tests on a variety of components 
+(many fields drop completely from the page), added $sQueryMinInterval and dawdle to ensure google qrys are at least that 
+far apart (30s), untype $Title, to let it acommoodate objects & arrays, making ratingvalue test (optional field), 
+replacing -like with rgx -match
+* 11:17 PM 6/3/2017 fixed the Released date (regex out actual date, dropped the regional designator), 
+shifted to outputing a raw data obje in func, and handle formatting post-return, removed 
+'field name: strings from data. Played with outputs a bit, added -Full param, to dump full CObj, 
+otherwise dumps a summary, completely retooled, largely from scratch, leveraging xml elements parsing. 
+* 9:47 AM 6/3/2017 port and cleanup, add pshelp, real param block, otb syntax
 .DESCRIPTION
 Get-IMDBSearch.ps1 - Interactive Imdb title lookup function, 
 uses xml parsing. Returns and lists closest matches in menu, then returns details of selected choice
@@ -86,6 +94,16 @@ Function Get-IMDBSearch  {
     Inspired by code By: Unknown, posted by kristofdba,  jerdub1993's xml element parsing code
     Website:	https://kristofdba.wordpress.com/2013/03/05/imdb-powershell-function/
                 https://www.reddit.com/r/PowerShell/comments/61kib6/query_imdb_for_movies_and_information/
+    Change Log
+    * 9:15 PM 6/4/2017 updated where -> ? syntax throughout. 
+    made SummaryLine dynamic, 3-line & 4-line to accommodate items wo mpaa ratings, added if/then tests on a 
+    variety of components (many fields drop completely from the page), untype $Title, to let it acommoodate objects & arrays
+    making ratingvalue test (optional field), replacing -like with rgx -match
+    * 11:17 PM 6/3/2017 fixed the Released date (regex out actual date, dropped the regional designator), 
+    shifted to outputing a raw data obje in func, and handle formatting post-return, removed 'field name: strings from data. 
+    Played with outputs a bit, added -Full param, to dump full CObj, otherwise dumps a summary
+    works fairly well, completely retooled, largely from scratch, leveraging xml elements parsing. 
+    * 9:47 AM 6/3/2017 port and cleanup, add pshelp, real param block, otb syntax
     .DESCRIPTION
     Get-IMDBSearch() - Interactive Imdb title lookup script & function, 
     uses xml parsing. Returns and lists closest matches in menu, then returns details of selected choice
@@ -142,6 +160,12 @@ Function Get-IMDBSearch  {
 
             switch ($fields.Count) {
                 "4" {
+                    <# TV show 4 liner:
+                    Demolition: The Wrecking Crew (TV Series 2015– ) - IMDb
+                    www.imdb.com/title/tt4487606/‎Cached
+                    SimilarDocumentary · Add a Plot » ... Demolition: The Wrecking Crew. 1h | Documentary 
+                    | TV Series (2015– ) · Episode Guide. 3 episodes · Add a Plot » ...
+                    #>
                     if($fields[3]){
                         $Summary = "$($fields[3].substring(0,[System.Math]::Min(50, $fields[3].Length)))..." ; 
                     } else {
@@ -149,6 +173,13 @@ Function Get-IMDBSearch  {
                     } ; 
                 }
                 "5" {
+                    <# movie 5-liner
+                    The Wrecking Crew (1968) - IMDb
+                    www.imdb.com/title/tt0065225/‎Cached
+                    Similar  Rating: 5.9/10 - 1,601 votes
+                    Action · The count has stolen enough gold to cause a financial crisis in the world 
+                    markets so I.C.E. sends in ace spy Matt Helm to stop him. As Matt works alone, ...
+                    #>
                     if($fields[3]){
                         $Summary = "$($fields[3].substring(0,[System.Math]::Min(50, $fields[3].Length)))..." ; 
                     } else {
@@ -244,8 +275,21 @@ Function Get-IMDBSearch  {
         
         $moviedata.Title = (($pageElems | ?{$_.itemprop -eq "name"})[0].innerHTML -split "&nbsp;")[0] ;
         
+        <# typical summary line examples: 
+        #3 dead stoned:           "1h 38min | Documentary, Biography, Comedy | 25 September 2015 (USA) "
+        # wonder woman:          "PG-13 | 2h 21min | Action, Adventure, Fantasy | 2 June 2017 (USA) "
+        # Battlestar Galactica : "TV-14 | 44min | Action, Adventure, Drama | TV Series (2004–2009) "
+        # doctor who 63:         "TV-PG | 45min | Adventure, Drama, Family | TV Series (1963–1989) "
+        #3 Les Elkes champions du Cake-Walk (1903): "1min | Short | 1903 (France) "
+        # 4count, have 0:MpaaRating ; 1:Duration ; 2:Genre ; 3:releasedate (region)
+        # 3 count have 0:Duration ; 1:Genre ; 2:releasedate (region)
+        #>
+
         switch($SummaryLine.count){
             "3" {
+                # 3 count have 0:Duration ; 1:Genre ; 2:releasedate (region)
+                #3 dead stoned:           "1h 38min | Documentary, Biography, Comedy | 25 September 2015 (USA) "
+                #3 Les Elkes champions du Cake-Walk (1903): "1min | Short | 1903 (France) "
                 $moviedata.MPAARating = "-" ; # always a blank rating on a 3count
                 $moviedata.Genres = $($SummaryLine[1].Trim()) ;
                 
@@ -290,6 +334,10 @@ Function Get-IMDBSearch  {
             }# swtch-3-E ; 
 
             "4" {
+                # 4count, have 0:MpaaRating ; 1:Duration ; 2:Genre ; 3:releasedate (region)
+                # wonder woman:          "PG-13 | 2h 21min | Action, Adventure, Fantasy | 2 June 2017 (USA) "
+                # Battlestar Galactica : "TV-14 | 44min | Action, Adventure, Drama | TV Series (2004–2009) "
+                # doctor who 63:         "TV-PG | 45min | Adventure, Drama, Family | TV Series (1963–1989) "
                 $moviedata.MPAARating = $SummaryLine[0].tostring().trim() ;
                 $moviedata.Genres = $($SummaryLine[2].Trim()) ;
 
@@ -325,6 +373,8 @@ Function Get-IMDBSearch  {
 
         } ; 
        
+       # 9:12 PM 9/12/2017force blank to -
+       if(!$moviedata.Released){$moviedata.Released = "-" ; } ; 
 
         # 12:22 PM 6/4/2017 ratingValue is optional, pre-test for presence
         if(($pageElems | ?{$_.class -eq "ratingValue"})){
@@ -345,7 +395,7 @@ Function Get-IMDBSearch  {
             $moviedata.Director="-" ; 
         }; 
         if($Writers=($crSum|?{$_ -like '*Writers:*'}).innerText){
-            # 2:08 PM 6/4/2017 split out : '| 1 more credit' � 
+            # 2:08 PM 6/4/2017 split out : '| 1 more credit' » 
             if($Writers -match ".*\|.*"){
                 $moviedata.Writers= $Writers.tostring().split("|").trim()[0].replace("Writers: ",""); 
             } else { 
@@ -364,9 +414,13 @@ Function Get-IMDBSearch  {
         } else {
             $moviedata.Stars="-" ; 
         };
-
-        $moviedata.Description = ($pageElems | ?{$_.class -eq "summary_text"})[0].innertext.tostring().trim() ; 
-        if($moviedata.Description -match "^Add\sa\sPlot\s.*"){
+        # 6:15 PM 9/12/2017 2-step it, some come back with no summary_text
+        $TempResult = $null ; 
+        $TempResult = $pageElems | ?{$_.class -eq "summary_text"} ; 
+        if($TempResult){
+            $moviedata.Description = $TempResult[0].innertext.tostring().trim() ; 
+        } ; 
+        if(($moviedata.Description -match "^Add\sa\sPlot\s.*") -OR (!$moviedata.Description)){
             $moviedata.Description = "-" ; 
         } ; 
         # 3:22 PM 6/4/2017 Storyline doesn't always appear, pretest
@@ -376,25 +430,50 @@ Function Get-IMDBSearch  {
             $moviedata.Storyline = "-" ; 
         } ; 
         # 3:28 PM 6/4/2017 looks like Plot Keywords aren't consistently availalble either, pretest
-        if(($pageElems | ?{$_.class -eq "see-more inline canwrap"})[0].outerText -match "(Plot\sKeywords:\s.*\s)\|\sSee\sAll\s\(\d*\)\s.*" ){
-            $moviedata.PlotkeywordsKey = $matches[1].tostring().trim() ; 
-        } else { 
+        # 6:10 PM 9/12/2017 it's passing even when there's no proper match, 2 step it and then test
+        $TempResult = $null ; 
+        $TempResult = $pageElems | ?{$_.class -eq "see-more inline canwrap"} ; 
+        #if(($pageElems | ?{$_.class -eq "see-more inline canwrap"})[0].outerText -match "(Plot\sKeywords:\s.*\s)\|\sSee\sAll\s\(\d*\)\s.*" ){
+        if($TempResult){
+            if($TempResult[0].outerText -match "(Plot\sKeywords:\s.*\s)\|\sSee\sAll\s\(\d*\)\s.*" ){
+                $moviedata.PlotkeywordsKey = $matches[1].tostring().trim() ; 
+            } ; 
+        } ; 
+        if(!$moviedata.PlotkeywordsKey){
             $moviedata.PlotkeywordsKey = "-" ; 
         } ; 
-        
-        if(($pageElems | ?{$_.id -eq "titleDetails"})[0].innertext -match ".*(Country:\s.*)"){
-            # also replace out the pipe with comma
-            $moviedata.Country=($matches[1] -replace "\s\|\s","," -replace("Country: ","")).tostring().trim(); 
-        } else { $moviedata.Country="-" } ; 
 
-        if(($pageElems | ?{$_.id -eq "titleDetails"})[0].innertext -match ".*(Language:\s.*)" ){
-            # 8:07 PM 6/4/2017 replace pipe->comma
-            $moviedata.Language=$matches[1].tostring().replace("Language: ","").trim() -replace "\s\|\s",","; 
-        } else {  $moviedata.Language="-" } ; 
-        if(($pageElems | ?{$_.id -eq "titleDetails"})[0].innertext -match ".*(Color:.*)" ){
-            # 9:58 PM 6/6/2017 sub-out pipe for comma
-            $moviedata.Color=$matches[0].tostring().replace("Color: ","").trim() -replace("\|\s",","); 
-        } else { $moviedata.Color = "-" } ; 
+        # 8:49 PM 9/12/2017 2-step
+        $TempResult = $null ; 
+        $TempResult = $pageElems | ?{$_.id -eq "titleDetails"} ; 
+        #if(($pageElems | ?{$_.class -eq "see-more inline canwrap"})[0].outerText -match "(Plot\sKeywords:\s.*\s)\|\sSee\sAll\s\(\d*\)\s.*" ){
+        if($TempResult){
+            if(($TempResult)[0].innertext -match ".*(Country:\s.*)"){
+                # also replace out the pipe with comma
+                $moviedata.Country=($matches[1] -replace "\s\|\s","," -replace("Country: ","")).tostring().trim(); 
+            } ;
+        } ;  
+        if(!$moviedata.Country){ $moviedata.Country="-" } ; 
+        
+        # 8:57 PM 9/12/2017 2 stage
+        $tempResult = $pageElems | ?{$_.id -eq "titleDetails"} ; 
+        if($tempREsult){
+            if(($pageElems | ?{$_.id -eq "titleDetails"})[0].innertext -match ".*(Language:\s.*)" ){
+                # 8:07 PM 6/4/2017 replace pipe->comma
+                $moviedata.Language=$matches[1].tostring().replace("Language: ","").trim() -replace "\s\|\s",","; 
+            } ;
+        } ; 
+        if(!$moviedata.Language){  $moviedata.Language="-" } ; 
+
+        $tempResult= $pageElems | ?{$_.id -eq "titleDetails"} ; 
+        if($tempResult){
+            if(($tempResult)[0].innertext -match ".*(Color:.*)" ){
+                # 9:58 PM 6/6/2017 sub-out pipe for comma
+                $moviedata.Color=$matches[0].tostring().replace("Color: ","").trim() -replace("\|\s",","); 
+            } ; 
+        } ; 
+        if(!$moviedata.Color){ $moviedata.Color = "-" } ; 
+
         $moviedata.imdbID=$($TImdbID) ; 
         $moviedata.imdbURL=$($URL) ; 
 
@@ -430,7 +509,7 @@ Function Get-IMDBSearch  {
 
 #*======v SUB MAIN v======
 
-$sQueryMinInterval=30 ; # seconds minimum between queries (avoid google bot throttling)
+$sQueryMinInterval=30 ; # seconds min between queries (avoid google bot throttling)
 foreach ($movie in $Title){    
     $sw = [Diagnostics.Stopwatch]::StartNew() ; 
     $bRet = Get-IMDBSearch -Title $movie ; 
@@ -447,7 +526,11 @@ foreach ($movie in $Title){
         "Country:$($bRet.Country)" ; 
         "Language:$($bRet.Language)" ; 
         "Color:$($bRet.Color)" ; 
-        "Title:$($bRet.Title) ($(get-date $bRet.Released -format 'yyyy'))" ; 
+        if($bRet.Released -eq "-" ){
+            "Title:$($bRet.Title) ($($bRet.Released))" ; 
+        } else { 
+            "Title:$($bRet.Title) ($(get-date $bRet.Released -format 'yyyy'))" ; 
+        }
         "Director:$($bRet.Director)" ; 
     } ; 
     write-host "=== ^ $($bRet.Title) ^ ===`n" ; 
@@ -474,4 +557,3 @@ if ($ShowDebug -OR ($DebugPreference = "Continue")) {
 if($ErrorActionPreference -eq 'Stop') {$ErrorActionPreference = 'Continue' ; write-debug "(Restoring `$ErrorActionPreference:$ErrorActionPreference;"};
 
 #*======^ END SUB MAIN ^======
-
