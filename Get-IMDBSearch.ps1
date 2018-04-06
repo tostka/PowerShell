@@ -1,4 +1,4 @@
-﻿#Get-IMDBSearch.ps1 - Imdb title lookup function, uses text/html parsing. Posted by kristofdba
+#Get-IMDBSearch.ps1 - Imdb title lookup function, uses text/html parsing. Posted by kristofdba
 # debug single-movie: Clear-Host ; .\get-ImdbSearch.ps1  -Title 'night of the living dead 1990' ; 
 # debug single tv: Clear-Host ; .\get-ImdbSearch.ps1  -Title "The Good Guys" ; 
 # debug looping a block: Clear-Host ; .\get-ImdbSearch.ps1  -Title "The Wrecking Crew" ; 
@@ -152,10 +152,10 @@ Function Get-IMDBSearch  {
             switch ($fields.Count) {
                 "4" {
                     <# TV show 4 liner:
-                    Demolition: The Wrecking Crew (TV Series 2015� ) - IMDb
+                    Demolition: The Wrecking Crew (TV Series 2015? ) - IMDb
                     www.imdb.com/title/tt4487606/?Cached
-                    SimilarDocumentary � Add a Plot � ... Demolition: The Wrecking Crew. 1h | Documentary 
-                    | TV Series (2015� ) � Episode Guide. 3 episodes � Add a Plot � ...
+                    SimilarDocumentary ? Add a Plot ? ... Demolition: The Wrecking Crew. 1h | Documentary 
+                    | TV Series (2015? ) ? Episode Guide. 3 episodes ? Add a Plot ? ...
                     #>
                     if($fields[3]){
                         $Summary = "$($fields[3].substring(0,[System.Math]::Min(50, $fields[3].Length)))..." ; 
@@ -168,7 +168,7 @@ Function Get-IMDBSearch  {
                     The Wrecking Crew (1968) - IMDb
                     www.imdb.com/title/tt0065225/?Cached
                     Similar  Rating: 5.9/10 - 1,601 votes
-                    Action � The count has stolen enough gold to cause a financial crisis in the world 
+                    Action ? The count has stolen enough gold to cause a financial crisis in the world 
                     markets so I.C.E. sends in ace spy Matt Helm to stop him. As Matt works alone, ...
                     #>
                     if($fields[3]){
@@ -263,8 +263,8 @@ Function Get-IMDBSearch  {
         <# typical summary line examples: 
         #3 dead stoned:           "1h 38min | Documentary, Biography, Comedy | 25 September 2015 (USA) "
         # wonder woman:          "PG-13 | 2h 21min | Action, Adventure, Fantasy | 2 June 2017 (USA) "
-        # Battlestar Galactica : "TV-14 | 44min | Action, Adventure, Drama | TV Series (2004�2009) "
-        # doctor who 63:         "TV-PG | 45min | Adventure, Drama, Family | TV Series (1963�1989) "
+        # Battlestar Galactica : "TV-14 | 44min | Action, Adventure, Drama | TV Series (2004?2009) "
+        # doctor who 63:         "TV-PG | 45min | Adventure, Drama, Family | TV Series (1963?1989) "
         #3 Les Elkes champions du Cake-Walk (1903): "1min | Short | 1903 (France) "
         # 4count, have 0:MpaaRating ; 1:Duration ; 2:Genre ; 3:releasedate (region)
         # 3 count have 0:Duration ; 1:Genre ; 2:releasedate (region)
@@ -321,8 +321,8 @@ Function Get-IMDBSearch  {
             "4" {
                 # 4count, have 0:MpaaRating ; 1:Duration ; 2:Genre ; 3:releasedate (region)
                 # wonder woman:          "PG-13 | 2h 21min | Action, Adventure, Fantasy | 2 June 2017 (USA) "
-                # Battlestar Galactica : "TV-14 | 44min | Action, Adventure, Drama | TV Series (2004�2009) "
-                # doctor who 63:         "TV-PG | 45min | Adventure, Drama, Family | TV Series (1963�1989) "
+                # Battlestar Galactica : "TV-14 | 44min | Action, Adventure, Drama | TV Series (2004?2009) "
+                # doctor who 63:         "TV-PG | 45min | Adventure, Drama, Family | TV Series (1963?1989) "
                 $moviedata.MPAARating = $SummaryLine[0].tostring().trim() ;
                 $moviedata.Genres = $($SummaryLine[2].Trim()) ;
 
@@ -380,7 +380,7 @@ Function Get-IMDBSearch  {
             $moviedata.Director="-" ; 
         }; 
         if($Writers=($crSum|?{$_ -like '*Writers:*'}).innerText){
-            # 2:08 PM 6/4/2017 split out : '| 1 more credit' � 
+            # 2:08 PM 6/4/2017 split out : '| 1 more credit' ? 
             if($Writers -match ".*\|.*"){
                 $moviedata.Writers= $Writers.tostring().split("|").trim()[0].replace("Writers: ",""); 
             } else { 
