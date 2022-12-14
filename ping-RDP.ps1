@@ -1,4 +1,4 @@
-# ping-RDP.ps1
+ï»¿# ping-RDP.ps1
 <#
 .SYNOPSIS
 ping-RDP.ps1 - runs a dawdle loop polling for RDP port 3389 up on target server. Once avail launches an rdp (mstsc.exe /v:xxx) to the specified box.
@@ -23,7 +23,7 @@ function Test-Port {
     PARAM([parameter(Mandatory=$true)] [alias("s")] [string]$Server, [parameter(Mandatory=$true)][alias("p")]
     [int]$port
     ) ; 
-    $ErrorActionPreference = “SilentlyContinue” ; 
+    $ErrorActionPreference = ï¿½SilentlyContinueï¿½ ; 
     $socket = new-object Net.Sockets.TcpClient ; 
     $socket.Connect($Server, $port) ; 
     if ($socket.Connected) {

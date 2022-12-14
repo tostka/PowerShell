@@ -1,4 +1,4 @@
-#c:\usr\work\exch\scripts\publish-profile2servers.ps1
+ï»¿#c:\usr\work\exch\scripts\publish-profile2servers.ps1
 # push the local $profile copy in uwes to the full range of Ex & L13 servers
 # debug command syntax: Clear-Host ; .\publish-profile2servers.ps1 -whatif
 
@@ -129,7 +129,7 @@ function Get-TimeStamp {
     .EXAMPLE
     Write "$(Get-TimeStamp):MESSAGE"
     .EXAMPLE
-    write-host "$(Get-TimeStamp):MESSAGE" –verbose ;
+    write-host "$(Get-TimeStamp):MESSAGE" ï¿½verbose ;
     .EXAMPLE
     write-host -foregroundcolor yellow  "$(Get-TimeStamp):MESSAGE";
     .LINK

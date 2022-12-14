@@ -1,4 +1,4 @@
-# get-HT-MsgTrk-TopTraffic-LastXMin.ps1
+ï»¿# get-HT-MsgTrk-TopTraffic-LastXMin.ps1
 
 #*----------V Comment-based Help (leave blank line below) V---------- 
 
@@ -195,7 +195,7 @@ PARAM(
     #2. Use msgtrack to pull out the time range of receive events (make sure to use no-type):
     # events: DEFER | DELIVER | DSN | FAIL | POISONMESSAGE | RECEIVE | SEND
     # build the Message Tracking syntax as a string 
-    $sExcCmd = 'get-messagetrackinglog -ResultSize Unlimited -server ' + $ServerName + ' -Start "' + $TimeStampStart + '" -End "' + $TimeStampEnd + '" |  select Timestamp,ClientIp,ClientHostname,ServerIp,ServerHostname,SourceContext,ConnectorId,Source,EventId,InternalMessageId,MessageId,@{Name="Recipient-Addrs";Expression={$_.recipients}},RecipientStatus,TotalBytes,RecipientCount,RelatedRecipientAddress,Reference,MessageSubject,Sender,ReturnPath,MessageInfo | export-csv ' + $outTrkFile + ' â??notype' 
+    $sExcCmd = 'get-messagetrackinglog -ResultSize Unlimited -server ' + $ServerName + ' -Start "' + $TimeStampStart + '" -End "' + $TimeStampEnd + '" |  select Timestamp,ClientIp,ClientHostname,ServerIp,ServerHostname,SourceContext,ConnectorId,Source,EventId,InternalMessageId,MessageId,@{Name="Recipient-Addrs";Expression={$_.recipients}},RecipientStatus,TotalBytes,RecipientCount,RelatedRecipientAddress,Reference,MessageSubject,Sender,ReturnPath,MessageInfo | export-csv ' + $outTrkFile + ' ï¿½??notype' 
     
     write-host -foregroundcolor Yellow "---"
     write-host -foregroundcolor Yellow ((get-date).ToString("HH:mm:ss") + ": Running initial messagetracking query(collect " + $TrkMins + "min traffic)...")
@@ -362,7 +362,7 @@ Messages quarantined by the Content Filter are also delivered as DSNs. the recip
 EXPAND Distribution Group expanded. The RelatedRecipientAddress field has the SMTP address of the Distribution Group.
 FAIL Delivery failed. The RecipientStatus field has more information about the failure, including the SMTP response code. You should also look at the Source and Recipients fields when inspecting messages with this event.
 POISONMESSAGE Message added to or removed from the poison queue
-RECEIVE "Message received. The Source field is STOREDRIVER for messages submitted by Store Driver (from a Mailbox server), or  SMTP for messagesâ?¦
+RECEIVE "Message received. The Source field is STOREDRIVER for messages submitted by Store Driver (from a Mailbox server), or  SMTP for messagesï¿½?ï¿½
 a) received from another Hub/Edge
 b) received from an external (non-Exchange) host using SMTP
 c) submitted by SMTP clients such as POP/IMAP users."
@@ -404,7 +404,7 @@ if (!(test-path $LOGPAREXE)) {
     exit 1
   }  # if-block end
   write-host ((get-date).ToString("HH:mm:ss") + ": Creating " + $HTTempDir)
-  New-Item $HTTempDir â??type directory    
+  New-Item $HTTempDir ï¿½??type directory    
 } # if-block end
 
 $TimeStampNow = get-date -uformat "%Y%m%d-%H%M" 

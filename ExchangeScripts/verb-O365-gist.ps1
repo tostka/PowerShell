@@ -1,4 +1,4 @@
-# verb-o365-gist-pub.ps1
+﻿# verb-o365-gist-pub.ps1
 ## ======== V O365 EXO ETC FUNCS() V ===
 # stuff your Office 365 admin account credentials into variables for unprompted reuse
 <# the following are Admin (UID) and non-admin (LUA) credential objects for different tenants and logons

@@ -1,4 +1,4 @@
-# verb-EXO.ps1
+﻿# verb-EXO.ps1
 #           ===========
 #*======v VERB-EXO SET v======
 <# Versions: # 9:24 PM 7/16/2018 broad cleanup & tightening

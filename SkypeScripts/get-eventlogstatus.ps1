@@ -1,4 +1,4 @@
-# get-EventLogStatus.ps1
+﻿# get-EventLogStatus.ps1
 
 <# 
 .SYNOPSIS

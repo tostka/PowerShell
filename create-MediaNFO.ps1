@@ -1,4 +1,4 @@
-# create-MediaNFO.ps1
+﻿# create-MediaNFO.ps1
 # debg cmd: clear-host ; C:\usr\work\ps\scripts\create-MediaNFO-20160110-0800PM.ps1 -IFile "I:\videos\Movie\comedy\Movie.mp4"
 # debg cmd: Clear-Host ; .\create-MediaNFO.ps1 -ifile "I:\videos\Movie\all-flick-paths.csv" -showDebug -Whatif ; 
 

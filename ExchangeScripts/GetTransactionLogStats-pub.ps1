@@ -1,4 +1,4 @@
-# GetTransactionLogStats.ps1
+ï»¿# GetTransactionLogStats.ps1
 
 <# 
 .SYNOPSIS
@@ -40,7 +40,7 @@ Switch specifying we want to capture current log generations. If this switch is 
 .PARAMETER  Analyze
 Switch specifying we want to analyze already captured data. If this switch is omitted, the -Gather switch must be used.
 .PARAMETER  ResetStats
-Switch indicating that the output file, LogStats.csv, should be cleared and reset. Only works if combined with –Gather.
+Switch indicating that the output file, LogStats.csv, should be cleared and reset. Only works if combined with ï¿½Gather.
 .PARAMETER  WorkingDirectory
 The directory containing TargetServers.txt and LogStats.csv. If omitted, the working directory will be the current working directory of PowerShell (not necessarily the directory the script is in).
 .PARAMETER  LogDirectoryOut
@@ -694,7 +694,7 @@ PARAMETERS:
 
 `t-ResetStats
 `t`tSwitch indicating that the output file, LogStats.csv, should
-`t`tbe cleared and reset. Only works if combined with –Gather.
+`t`tbe cleared and reset. Only works if combined with ï¿½Gather.
 
 `t-WorkingDirectory
 `t`tThe directory containing TargetServers.txt and LogStats.csv.

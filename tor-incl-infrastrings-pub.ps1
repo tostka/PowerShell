@@ -1,4 +1,4 @@
-# c:\usr\work\exch\scripts\tor-incl-infrastrings.ps1
+﻿# c:\usr\work\exch\scripts\tor-incl-infrastrings.ps1
 
 #*----------V Comment-based Help (leave blank line below) V---------- 
 

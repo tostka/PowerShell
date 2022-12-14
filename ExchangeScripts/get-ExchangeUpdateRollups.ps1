@@ -1,4 +1,4 @@
-# Get-ExchangeUpdateRollups.ps1 - Gets the Exchange Server 2007, Exchange 2010 and Exchange 2013 Update Rollups
+ï»¿# Get-ExchangeUpdateRollups.ps1 - Gets the Exchange Server 2007, Exchange 2010 and Exchange 2013 Update Rollups
 
 <# 
 .SYNOPSIS
@@ -17,9 +17,9 @@ Change Log
 	ren chg rpt file results.csv => $ofile (scriptname-report-timestamped.csv)
 	added $ofile invoke item, reformated to OTB, 
 * Posted version:"UPDATED: Feb 26, 2014, updated script to accommodate Exchange 2013
-The script was not written to accommodate Exchange 2013 as it doesn’t use RU. 
+The script was not written to accommodate Exchange 2013 as it doesnï¿½t use RU. 
 It uses different servicing model. I have updated script to work with 2013 but 
-it won’t report CU, it will provide build numbers that can be matched to CUs 
+it wonï¿½t report CU, it will provide build numbers that can be matched to CUs 
 published on TechNet. Links are included in the script."
 .DESCRIPTION
 Get-ExchangeUpdateRollups.ps1

@@ -1,4 +1,4 @@
-# AdGroupMembersRecurse.ps1
+ï»¿# AdGroupMembersRecurse.ps1
 # prev named: get-AdGroupMembersRecurse.ps1
 # debug command: Clear-Host ; AdGroupMembersRecurse.ps1 -Groups "Group1","Group2" ; 
   <# 
@@ -39,11 +39,11 @@
   *---^ END Comment-based Help  ^--- #>
 
 # 11:31 AM 12/11/2015 add requires for ADMS & PSv3
-<# #Requires –Version 3  disabled, server etc are on PSv2
+<# #Requires ï¿½Version 3  disabled, server etc are on PSv2
 #>
 
 [CmdletBinding()]
-#Requires –Modules ActiveDirectory
+#Requires ï¿½Modules ActiveDirectory
 Param(
   [Parameter(Mandatory=$True,
     ValueFromPipeline=$True,
@@ -334,7 +334,7 @@ Write-Verbose "END ==== $($scriptBaseName) ====" -Verbose:$verbose
 #*----------------^ END Function SUB MAIN ^----------------
 
 <# #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-$Msgs = (Get-ExchangeServer | where { $_.isHubTransportServer -eq $true -and $_.Site -like '*SiteName*' -and $_.admindisplayversion.major -eq 14} | get-messagetrackinglog -resultsize unlimited -Sender "AdGroupMembersRecurse@domain.com" -Start "$(([datetime]::Now.AddMinutes(-5)))"  ) ; $Msgs | ?{$_.connectorid –like '*\SMTP/VSCAN Relay to Ex2010'} | select Timestamp,Source,EventId,RelatedRecipientAddress,Sender,{$_.Recipients},RecipientCount,{$_.RecipientStatus},MessageSubject,TotalBytes,{$_.Reference},MessageLatency,MessageLatencyType,InternalMessageId,MessageId,ReturnPath,ClientIp,ClientHostname,ServerIp,ServerHostname,ConnectorId,SourceContext,MessageInfo,{$_.EventData} | export-csv -notype .\logs\TICKET-UID-XXX-EvtRcv-TIMESTMP.csv  ;
+$Msgs = (Get-ExchangeServer | where { $_.isHubTransportServer -eq $true -and $_.Site -like '*SiteName*' -and $_.admindisplayversion.major -eq 14} | get-messagetrackinglog -resultsize unlimited -Sender "AdGroupMembersRecurse@domain.com" -Start "$(([datetime]::Now.AddMinutes(-5)))"  ) ; $Msgs | ?{$_.connectorid ï¿½like '*\SMTP/VSCAN Relay to Ex2010'} | select Timestamp,Source,EventId,RelatedRecipientAddress,Sender,{$_.Recipients},RecipientCount,{$_.RecipientStatus},MessageSubject,TotalBytes,{$_.Reference},MessageLatency,MessageLatencyType,InternalMessageId,MessageId,ReturnPath,ClientIp,ClientHostname,ServerIp,ServerHostname,ConnectorId,SourceContext,MessageInfo,{$_.EventData} | export-csv -notype .\logs\TICKET-UID-XXX-EvtRcv-TIMESTMP.csv  ;
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 #>

@@ -1,4 +1,4 @@
-# restart-s4b.ps1
+﻿# restart-s4b.ps1
 
 #*------v Function restart-s4b v------
 Function restart-s4b {

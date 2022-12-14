@@ -1,4 +1,4 @@
-# PsGet-install.ps1
+﻿# PsGet-install.ps1
 
 # debug: . \\server\scripts\PsGet-install.ps1 -path "\\server\scripts\PsGet.psm1" -whatif -showdebug ;
 

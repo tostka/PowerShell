@@ -1,4 +1,4 @@
-# check-PingSlowLoop.ps1
+﻿# check-PingSlowLoop.ps1
 
 <# 
     .SYNOPSIS

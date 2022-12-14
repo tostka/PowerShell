@@ -1,4 +1,4 @@
-# create-NFOFileNotInXBMC.ps1
+﻿# create-NFOFileNotInXBMC.ps1
 
   <# create-NFOFile.ps1
   .SYNOPSIS

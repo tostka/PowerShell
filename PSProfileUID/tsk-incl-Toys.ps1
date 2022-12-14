@@ -1,4 +1,4 @@
-# c:\usr\home\db\tsk-incl-Toys.ps1 - Toy Function Includes
+﻿# c:\usr\home\db\tsk-incl-Toys.ps1 - Toy Function Includes
 
 #*======v NON-ADMIN: C:\Users\Account\Documents\WindowsPowerShell\profile.ps1 v======
 # NON-ADMIN acct $profile.CurrentUserAllHosts loc

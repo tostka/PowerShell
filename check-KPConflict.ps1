@@ -1,4 +1,4 @@
-# check-KPConflict.ps1
+ï»¿# check-KPConflict.ps1
 # kp-conflict-chk.ps1
 # debug syntax: Clear-Host ; . C:\usr\work\ps\scripts\check-KPConflict.ps1 -showDebug ;
 <#
@@ -10,7 +10,7 @@ Website:    http://tinstoys.blogspot.com
 Twitter:    http://twitter.com/tostka
 Change Log
 # 7:57 AM 3/14/2016: added hanging prompt on the window
-# 7:26 AM 3/14/2016: gmail/whatever replaced quite a few dashes(-) with û. Subbed back out. 
+# 7:26 AM 3/14/2016: gmail/whatever replaced quite a few dashes(-) with ï¿½. Subbed back out. 
 # 11:40 AM 3/12/2016: did some recoding on the home v work dirs, and standardized to a root path
 # 3:16 PM 3/11/2016 Ln440: clear error if you didn't use the traytip
 # 7:40 AM 3/10/2016: Ren kp-conflict-chk.ps1|cmd => check-KPConflict.ps1|cmd, move ulb=>uwps. Switch from cmd to wrapperless (doc'd under Config: below).

@@ -1,4 +1,4 @@
-#Get-IMDBSearch.ps1 - Imdb title lookup function, uses text/html parsing. Posted by kristofdba
+﻿#Get-IMDBSearch.ps1 - Imdb title lookup function, uses text/html parsing. Posted by kristofdba
 # debug single-movie: Clear-Host ; .\get-ImdbSearch.ps1  -Title 'night of the living dead 1990' ; 
 # debug single tv: Clear-Host ; .\get-ImdbSearch.ps1  -Title "The Good Guys" ; 
 # debug looping a block: Clear-Host ; .\get-ImdbSearch.ps1  -Title "The Wrecking Crew" ; 

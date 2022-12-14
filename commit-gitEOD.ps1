@@ -1,4 +1,4 @@
-# commit-gitEOD.ps1
+﻿# commit-gitEOD.ps1
 
   <# 
   .SYNOPSIS

@@ -1,4 +1,4 @@
-# set-TaskBarGrouping.ps1
+﻿# set-TaskBarGrouping.ps1
 
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #<SCIPTFILENAME>.ps1, or #*----------v Function  v----------

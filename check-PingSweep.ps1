@@ -1,4 +1,4 @@
-# check-PingSweep.ps1
+﻿# check-PingSweep.ps1
 # run a subnet ping sweep on the designated subnet.
 
 <#$tSubnet="192.168.1"

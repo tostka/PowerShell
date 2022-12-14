@@ -1,4 +1,4 @@
-# NewModuleTree.ps1
+﻿# NewModuleTree.ps1
 # debug: Clear-Host ;  .\NewModuleTree.ps1 -ModuleName INIHandler -ModuleDesc "Functions to Read/Write INI files (via Hash/OrderedDictionary)" -showdebug -whatif ;
 # debug: populating batch tree BatScripts: .\NewModuleTree.ps1 -ModuleName VBCode -ModuleDesc "Visual Basic Projects" -showdebug -whatif ;
 

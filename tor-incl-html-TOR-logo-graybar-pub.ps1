@@ -1,4 +1,4 @@
-#tor-incl-html-TOR-logo-graybar.ps1
+ï»¿#tor-incl-html-TOR-logo-graybar.ps1
 #incl-html-TOR-logo-graybar.ps1
 
 # DOMAINspecific HTML/CSS-related includes boilerplate
@@ -37,10 +37,10 @@ $sHTMLhead= @"
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html><head><title>$PageTitle</title><meta http-equiv="refresh" content="120" />
-<style type=”text/css”>
-<!–
+<style type=ï¿½text/cssï¿½>
+<!ï¿½
 $CSSInlineText
-–>
+ï¿½>
 </style>
 </head>
 

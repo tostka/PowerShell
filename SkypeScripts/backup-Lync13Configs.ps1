@@ -1,4 +1,4 @@
-# backup-Lync13Configs.ps1
+﻿# backup-Lync13Configs.ps1
 # debug: cls ; .\backup-Lync13Configs.ps1 -showdebug -whatif ;
 <# 
 .SYNOPSIS

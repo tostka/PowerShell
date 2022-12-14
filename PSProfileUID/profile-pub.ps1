@@ -1,4 +1,4 @@
-#*================v NON-ADMIN : C:\Users\MyAccount\Documents\WindowsPowerShell\profile.ps1 v================
+﻿#*================v NON-ADMIN : C:\Users\MyAccount\Documents\WindowsPowerShell\profile.ps1 v================
 # ADMIN acct $profile.CurrentUserAllHosts loc
 #C:\Users\MyAccount\Documents\WindowsPowerShell\profile.ps1
 

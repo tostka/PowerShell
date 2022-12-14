@@ -1,4 +1,4 @@
-# c:\usr\home\db\xxx-prof.ps1
+ï»¿# c:\usr\home\db\xxx-prof.ps1
 
 #*======v NON-ADMIN: C:\Users\Account\Documents\WindowsPowerShell\profile.ps1 v======
 # NON-ADMIN acct $profile.CurrentUserAllHosts loc
@@ -380,11 +380,11 @@ if ($logonType -eq "MyNonAdmn") {
     Set-Alias dbx gotoDbox
     Set-Alias dbxdb gotoDboxDb
     Set-Alias oin openInput
-    Set-Alias word ‘C:\Program Files\Microsoft Office\Office14\WINWORD.EXE’
-    Set-Alias powerpnt ‘C:\Program Files\Microsoft Office\Office14\POWERPNT.EXE’
-    Set-Alias excel ‘C:\Program Files\Microsoft Office\Office14\EXCEL.EXE’
-    Set-Alias outlook ‘C:\Program Files\Microsoft Office\Office14\OUTLOOK.EXE’
-    Set-Alias firefox ‘C:\Program Files\Mozilla Firefox\firefox.exe’
+    Set-Alias word ï¿½C:\Program Files\Microsoft Office\Office14\WINWORD.EXEï¿½
+    Set-Alias powerpnt ï¿½C:\Program Files\Microsoft Office\Office14\POWERPNT.EXEï¿½
+    Set-Alias excel ï¿½C:\Program Files\Microsoft Office\Office14\EXCEL.EXEï¿½
+    Set-Alias outlook ï¿½C:\Program Files\Microsoft Office\Office14\OUTLOOK.EXEï¿½
+    Set-Alias firefox ï¿½C:\Program Files\Mozilla Firefox\firefox.exeï¿½
     # with Call Operator & ; Why: Used to treat a string as a SINGLE command. Useful for dealing with spaces: & 'C:\Program Files\Windows Media Player\wmplayer.exe' "c:\videos\my home video.avi" /fullscreen
     function firefox-private {& 'C:\Program Files (x86)\Mozilla Firefox\firefox.exe' -no-remote -p ToddPriv}
     #Set-Alias firefoxp & 'C:\Program Files (x86)\Mozilla Firefox\firefox.exe' -no-remote -P ToddPriv

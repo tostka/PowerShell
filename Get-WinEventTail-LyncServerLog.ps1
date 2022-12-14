@@ -1,4 +1,4 @@
-# Get-WinEventTail-LyncServerLog.ps1
+﻿# Get-WinEventTail-LyncServerLog.ps1
 # Get-WinEventTail.ps1
 
 <# 

@@ -1,4 +1,4 @@
-#*================v NON-ADMIN ISE PROFILE: C:\Users\MyAccount\Documents\WindowsPowerShell\Microsoft.PowerShellISE_profile.ps1 v================
+﻿#*================v NON-ADMIN ISE PROFILE: C:\Users\MyAccount\Documents\WindowsPowerShell\Microsoft.PowerShellISE_profile.ps1 v================
 # Powershell ISE profile
 # C:\C:\Users\MyAccount\Documents\WindowsPowerShell\Microsoft.PowerShellISE_profile.ps1
 # notepad2 $profile # WITHIN ISE PS PROMPT

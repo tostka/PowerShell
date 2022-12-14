@@ -1,4 +1,4 @@
-# close-WinsAll.ps1
+﻿# close-WinsAll.ps1
 
 <# 
 .SYNOPSIS

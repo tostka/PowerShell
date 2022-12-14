@@ -1,4 +1,4 @@
-# set-AdminBG.ps1
+ï»¿# set-AdminBG.ps1
 
 <# 
 .SYNOPSIS
@@ -31,23 +31,23 @@ Change Log
 This can be configured as a Scheduled Task, to load on all logons. But this would not provide per-admin choice on the topic. 
 1) distribute .ps1, .lnk & .xml to all Lync FE's, SSRS & SQL Nodes (to c:\scripts) 1-line:
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-$files = (gci -path "\\tsclient\c\usr\work\lync\scripts\set-AdminBG*" | ?{$_.Name -match "(?i:(.*\.(PS1|CMD|LNK|XML)))$" }) ;$L13ProdALL="Server0;Server1;Server2" ; $L13ProdALL=$L13ProdALL.split(";") ; $L13ProdALL | foreach {  write-host -fore yell "copying $($files) to $_" ; copy-item -path $files –destination \\$_\c$\scripts\ -whatif ; } ;
+$files = (gci -path "\\tsclient\c\usr\work\lync\scripts\set-AdminBG*" | ?{$_.Name -match "(?i:(.*\.(PS1|CMD|LNK|XML)))$" }) ;$L13ProdALL="Server0;Server1;Server2" ; $L13ProdALL=$L13ProdALL.split(";") ; $L13ProdALL | foreach {  write-host -fore yell "copying $($files) to $_" ; copy-item -path $files ï¿½destination \\$_\c$\scripts\ -whatif ; } ;
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 2a) For a manual Startup menu launch: copy the shortcut .lnk to startup folder for Account & AdminAcct 1-line
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-$tUsers="Account","AdminAcct";$tFldr="C:\Users\XULOGONX\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" ;$files = get-childitem $($tFldr.replace("XULOGONX",$($env:username))) ; $L13ProdALL="Server0;Server1;Server2" ; $L13ProdALL=$L13ProdALL.split(";") ; $L13ProdALL | foreach {  write-host -fore yell "copying $($files) to $_" ;  foreach($usr in $tUsers){    copy-item -path $files –destination "$($tFldr.replace("XULOGONX",$usr))\" -whatif ;  } ; } ;
+$tUsers="Account","AdminAcct";$tFldr="C:\Users\XULOGONX\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" ;$files = get-childitem $($tFldr.replace("XULOGONX",$($env:username))) ; $L13ProdALL="Server0;Server1;Server2" ; $L13ProdALL=$L13ProdALL.split(";") ; $L13ProdALL | foreach {  write-host -fore yell "copying $($files) to $_" ;  foreach($usr in $tUsers){    copy-item -path $files ï¿½destination "$($tFldr.replace("XULOGONX",$usr))\" -whatif ;  } ; } ;
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 2b) Alternatively, you can use a ScheduledTask to launch on logon (multiple user's trigger Account|AdminAcct:  Export the current SchedTask to xml: (1-line):
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-Get-ScheduledTask set-AdminBG.ps1* | foreach {  Export-ScheduledTask -TaskName $_.TaskName -TaskPath $_.TaskPath | Out-File -Filepath (Join-Path -path "c:\scripts\" -childpath "$($_.TaskName).xml") –WhatIf ;} ; 
+Get-ScheduledTask set-AdminBG.ps1* | foreach {  Export-ScheduledTask -TaskName $_.TaskName -TaskPath $_.TaskPath | Out-File -Filepath (Join-Path -path "c:\scripts\" -childpath "$($_.TaskName).xml") ï¿½WhatIf ;} ; 
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-And then remote import via –CimSession
+And then remote import via ï¿½CimSession
 # note, multi logon triggers only work on the logon that 'created' the entry. So you need to push them under their own sessions!
 #-=-=-=-=-=-=Explicit AdminAcct (run from AdminAcct ps)-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-$srcTask="c:\scripts\set-AdminBG.ps1 (Admin Informational Wallpaper)-AdminAcct.xml" ;$file =  get-childitem -path $srcTask ;$L13ProdALL="Server0;Server1;Server2".split(";") ;$L13ProdALL | foreach {  write-host -fore yell "importing SchedTask $($file) to $_" ;  copy-item -path $file –destination \\$_\c$\scripts\ -whatif ;   if(test-path "\\$_\c$\scripts\$($file.Name)") {    Register-ScheduledTask -CimSession $_ -Xml (get-content "$file" | out-string) -TaskName $((split-path $srcTask -leaf).replace(".xml","")) -User DOMAIN\AdminAcct –Force ;    } else { write-warning "$((get-date).ToString("HH:mm:ss")):Missing src xml at far end!" } ;} ; 
+$srcTask="c:\scripts\set-AdminBG.ps1 (Admin Informational Wallpaper)-AdminAcct.xml" ;$file =  get-childitem -path $srcTask ;$L13ProdALL="Server0;Server1;Server2".split(";") ;$L13ProdALL | foreach {  write-host -fore yell "importing SchedTask $($file) to $_" ;  copy-item -path $file ï¿½destination \\$_\c$\scripts\ -whatif ;   if(test-path "\\$_\c$\scripts\$($file.Name)") {    Register-ScheduledTask -CimSession $_ -Xml (get-content "$file" | out-string) -TaskName $((split-path $srcTask -leaf).replace(".xml","")) -User DOMAIN\AdminAcct ï¿½Force ;    } else { write-warning "$((get-date).ToString("HH:mm:ss")):Missing src xml at far end!" } ;} ; 
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #-=-=-=-=-=-=Explicit Account (run from Account ps)-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-$srcTask="c:\scripts\set-AdminBG.ps1 (Admin Informational Wallpaper)-kadrtiss.xml" ;$file =  get-childitem -path $srcTask ;$L13ProdALL="Server0;Server1;Server2".split(";") ;$L13ProdALL | foreach {  write-host -fore yell "importing SchedTask $($file) to $_" ;  copy-item -path $file –destination \\$_\c$\scripts\ -whatif ;   if(test-path "\\$_\c$\scripts\$($file.Name)") {    Register-ScheduledTask -CimSession $_ -Xml (get-content "$file" | out-string) -TaskName $((split-path $srcTask -leaf).replace(".xml","")) -User DOMAIN\Account –Force ;    } else { write-warning "$((get-date).ToString("HH:mm:ss")):Missing src xml at far end!" } ;} ; 
+$srcTask="c:\scripts\set-AdminBG.ps1 (Admin Informational Wallpaper)-kadrtiss.xml" ;$file =  get-childitem -path $srcTask ;$L13ProdALL="Server0;Server1;Server2".split(";") ;$L13ProdALL | foreach {  write-host -fore yell "importing SchedTask $($file) to $_" ;  copy-item -path $file ï¿½destination \\$_\c$\scripts\ -whatif ;   if(test-path "\\$_\c$\scripts\$($file.Name)") {    Register-ScheduledTask -CimSession $_ -Xml (get-content "$file" | out-string) -TaskName $((split-path $srcTask -leaf).replace(".xml","")) -User DOMAIN\Account ï¿½Force ;    } else { write-warning "$((get-date).ToString("HH:mm:ss")):Missing src xml at far end!" } ;} ; 
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 # to bulk remove the above:
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -416,10 +416,10 @@ function get-LocalDiskFreeSpace {
 if($host.version.major -gt 2){
 	$os = Get-CimInstance Win32_OperatingSystem ;
 } else { 
-    $os = Get-WmiObject –class Win32_OperatingSystem –computername $($env:COMPUTERNAME) –erroraction Stop ; 
+    $os = Get-WmiObject ï¿½class Win32_OperatingSystem ï¿½computername $($env:COMPUTERNAME) ï¿½erroraction Stop ; 
 } ; 
 #>
-$os = Get-WmiObject –class Win32_OperatingSystem –computername $($env:COMPUTERNAME) –erroraction Stop
+$os = Get-WmiObject ï¿½class Win32_OperatingSystem ï¿½computername $($env:COMPUTERNAME) ï¿½erroraction Stop
 <#($o = [pscustomobject]@{
 		HostName =  $env:COMPUTERNAME ;
 		UserName = '{0}\{1}' -f  $env:USERDOMAIN,$env:USERNAME ;

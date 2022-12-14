@@ -1,4 +1,4 @@
-# c:\usr\home\db\tsk-incl-Home.ps1.ps1
+﻿# c:\usr\home\db\tsk-incl-Home.ps1.ps1
 
 
 #*======v NON-ADMIN: C:\Users\Account\Documents\WindowsPowerShell\profile.ps1 v======

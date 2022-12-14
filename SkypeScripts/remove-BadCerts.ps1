@@ -1,4 +1,4 @@
-# remove-BadCerts.ps1
+ï»¿# remove-BadCerts.ps1
 
   <# 
   .SYNOPSIS
@@ -48,7 +48,7 @@ if($badcerts){
     
         $error.clear() ;
         TRY {
-            $cert | Remove-Item –Force #-whatif ; 
+            $cert | Remove-Item ï¿½Force #-whatif ; 
         } catch {
             $msg=": Error Details: $($_)";
             Write-Error "$(Get-TimeStamp): FAILURE!" ;

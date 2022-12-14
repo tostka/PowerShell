@@ -1,4 +1,4 @@
-# Summarize-Shortcuts.ps1
+﻿# Summarize-Shortcuts.ps1
 
 # summarizing shortcuts into csv
 #*------v Function Summarize-Shortcuts v------

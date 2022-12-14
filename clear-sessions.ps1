@@ -1,4 +1,4 @@
-# clear-sessions.ps1
+﻿# clear-sessions.ps1
 # 1:03 PM 2/11/2016 initial vers
 
 #Get-PSSession|?{$_.State -eq 'Broken'} | Remove-PSSession #-whatif
